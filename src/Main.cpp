@@ -21,26 +21,15 @@
 
 constexpr unsigned FPS = 60
                  , IkarugaSpeed = 5
-                 , HoraiSpeed   = 3;
+                 , HoraiSpeed   = 3
+                 , MaxEnemies   = 20;
 
 constexpr Allegro::Size ScreenSize(1200, 800);
 constexpr Allegro::Size IkarugaSize(32, 32);
 constexpr Allegro::Size HoraiSize(20, 20);
 
 
-void spawnHorai(std::list<Game::Horai>& enemies, Allegro::Position position) {
-  enemies.push_back(
-    Game::Horai(
-      HoraiSize,
-      Game::RandomPolarity(),
-      HoraiSpeed,
-      position
-    )
-  );
-}
-
-
-auto main() -> int {
+auto main() -> int
   try {
     Allegro::Init();
     Allegro::Font::Init();
@@ -57,7 +46,7 @@ auto main() -> int {
       Game::Polarity::Green,
       IkarugaSpeed,
       (display.Size.Center - IkarugaSize.Center).Map(
-        [](auto x, auto y) { return Allegro::Position(x, y * 2); }
+        [](auto x, auto y) { return Allegro::Position(x, y * 2); } // Bottom center.
       )
     );
     
@@ -107,7 +96,7 @@ auto main() -> int {
             movementKeys[ALLEGRO_KEY_W] || movementKeys[ALLEGRO_KEY_UP],
             movementKeys[ALLEGRO_KEY_D] || movementKeys[ALLEGRO_KEY_RIGHT],
             movementKeys[ALLEGRO_KEY_S] || movementKeys[ALLEGRO_KEY_DOWN]
-            );
+          );
           
           if (ikarugaDirection)
             ikaruga.Move(
@@ -119,7 +108,7 @@ auto main() -> int {
           
           
           // Spawn a horai each second, max 15.
-          if (timer.Count() % 60 == 0 && enemies.size() <= 15) {
+          if (timer.Count() % FPS == 0 && enemies.size() <= MaxEnemies) {
             // Spawn at random position:
             auto pos = display.Size.Bounds.Reduce(HoraiSize).RandomPos();
             
@@ -127,7 +116,14 @@ auto main() -> int {
             while ((pos - ikaruga.Pos).In(Allegro::Size(200, 200).Bounds))
               pos = display.Size.Bounds.Reduce(HoraiSize).RandomPos();
             
-            spawnHorai(enemies, pos);
+            enemies.push_back(
+              Game::Horai(
+                HoraiSize,
+                Game::RandomPolarity(),
+                HoraiSpeed,
+                pos
+              )
+            );
           }
           
           for (auto horai = enemies.begin(); horai != enemies.end(); /* no increment */) {
@@ -186,11 +182,10 @@ auto main() -> int {
     display.Invalidate();
     
     Allegro::Rest(3);
+    
+    return 0;
   }
   catch (std::exception err) {
     std::cerr << err.what();
     return -1;
   }
-  
-  return 0;
-}
