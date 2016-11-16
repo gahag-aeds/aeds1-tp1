@@ -1,0 +1,32 @@
+SrcDir = src
+BinDir = bin
+
+AllegroLib = allegro-lib
+
+CheckDirs = IF NOT EXIST "$(BinDir)" mkdir "$(BinDir)";
+
+MainFile         = $(SrcDir)/Main.cpp
+OutputFile       = $(BinDir)/$(basename $(notdir $(MainFile)))
+CompilationUnits = $(SrcDir)/allegro/*.cpp \
+                   $(SrcDir)/game/*.cpp
+
+Build       = g++
+Standard    = c++14
+Libs        = $(AllegroLib)/lib/liballegro_monolith.dll.a
+BuildFlags  = -Wl,--subsystem,windows   \
+							-I $(AllegroLib)/include  \
+							-std=$(Standard)          \
+							-I $(SrcDir)              \
+							-o $(OutputFile)
+
+
+build: $(MainFile)
+	@$(CheckDirs)
+	@$(Build) $(BuildFlags) $(CompilationUnits) $(MainFile) $(Libs)
+
+run: build
+	@$(OutputFile);
+
+
+clean:
+	del $(OutputFile)
