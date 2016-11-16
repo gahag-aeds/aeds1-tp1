@@ -185,7 +185,7 @@ auto main() -> int
     
     return 0;
   }
-  catch (std::exception err) {
+  catch (const std::exception& err) {
     std::cerr << err.what();
     return -1;
   }
