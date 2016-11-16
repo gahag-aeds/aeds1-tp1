@@ -1,3 +1,7 @@
+# Build with:
+# allegro-mingw-gcc5.3.0-x64-5.2.1 - available @ http://liballeg.org/download.html
+# mingw-w64 5.3.0 x86_64 win32 seh - available @ https://sourceforge.net/projects/mingw-w64/
+
 SrcDir = src
 BinDir = bin
 
