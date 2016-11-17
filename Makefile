@@ -4,7 +4,8 @@ BinDir = bin
 CheckDirs = [ -d "$(BinDir)" ] || mkdir "$(BinDir)";
 
 MainFile         = $(SrcDir)/Main.cpp
-OutputFile       = $(BinDir)/$(basename $(notdir $(MainFile)))
+OutputFileName   = $(basename $(notdir $(MainFile)))
+OutputFile       = $(BinDir)/$(OutputFileName)
 CompilationUnits = $(SrcDir)/allegro/*.cpp \
                    $(SrcDir)/game/*.cpp
 
@@ -22,7 +23,7 @@ build: $(MainFile)
 	@$(Build) $(BuildFlags) $(CompilationUnits) $(MainFile)
 
 run: build
-	@$(OutputFile);
+	@cd $(BinDir) && ./$(OutputFileName)
 
 
 clean:
