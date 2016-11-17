@@ -1,9 +1,8 @@
 SrcDir = src
 BinDir = bin
 
-CheckDirs = [ -d "$(BinDir)" ] || mkdir "$(BinDir)";
-
 MainFile         = $(SrcDir)/Main.cpp
+ScoreFile        = $(BinDir)/score.dat
 OutputFileName   = $(basename $(notdir $(MainFile)))
 OutputFile       = $(BinDir)/$(OutputFileName)
 CompilationUnits = $(SrcDir)/allegro/*.cpp \
@@ -18,11 +17,16 @@ BuildFlags  = $(shell pkg-config --cflags --libs $(Libs))	\
               -o $(OutputFile)														\
 
 
-build: $(MainFile)
-	@$(CheckDirs)
+directories:
+	@[ -d "$(BinDir)" ] || mkdir "$(BinDir)";
+
+score.dat: directories
+	@echo "0" > $(ScoreFile)
+
+build: directories score.dat $(MainFile)
 	@$(Build) $(BuildFlags) $(CompilationUnits) $(MainFile)
 
-run: build
+run: directories build
 	@cd $(BinDir) && ./$(OutputFileName)
 
 

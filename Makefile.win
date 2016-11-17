@@ -7,8 +7,6 @@ BinDir = bin
 
 AllegroLib = allegro-lib
 
-CheckDirs = IF NOT EXIST "$(BinDir)" mkdir "$(BinDir)";
-
 MainFile         = $(SrcDir)/Main.cpp
 OutputFile       = $(BinDir)/$(basename $(notdir $(MainFile)))
 CompilationUnits = $(SrcDir)/allegro/*.cpp \
@@ -17,19 +15,21 @@ CompilationUnits = $(SrcDir)/allegro/*.cpp \
 Build       = g++
 Standard    = c++14
 Libs        = $(AllegroLib)/lib/liballegro_monolith.dll.a
-BuildFlags  = -Wl,--subsystem,windows   \
+BuildFlags  = -Wl,--subsystem,windows   \ # don't show console window.
 							-I $(AllegroLib)/include  \
 							-std=$(Standard)          \
 							-I $(SrcDir)              \
 							-o $(OutputFile)
 
 
-build: $(MainFile)
-	@$(CheckDirs)
-	@$(Build) $(BuildFlags) $(CompilationUnits) $(MainFile) $(Libs)
+directories:
+  @IF NOT EXIST "$(BinDir)" mkdir "$(BinDir)"
 
-run: build
-	@$(OutputFile);
+score.dat: directories
+	@echo "0" > $(ScoreFile)
+
+build: directories score.dat $(MainFile)
+	@$(Build) $(BuildFlags) $(CompilationUnits) $(MainFile) $(Libs)
 
 
 clean:
