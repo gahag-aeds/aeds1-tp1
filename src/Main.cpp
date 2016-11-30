@@ -100,14 +100,14 @@ auto main() -> int
           
           if (ikarugaDirection)
             ikaruga.Move(
-              ikarugaDirection.value(),
+              *ikarugaDirection,
               display.Size.Bounds.Reduce(ikaruga.Size)
             );
           
           ikaruga.DrawOn(display);
           
           
-          // Spawn a horai each second, max 15.
+          // Spawn a horai each second, while not MaxEnemies.
           if (timer.Count() % FPS == 0 && enemies.size() <= MaxEnemies) {
             // Spawn at random position:
             auto pos = display.Size.Bounds.Reduce(HoraiSize).RandomPos();
@@ -143,7 +143,7 @@ auto main() -> int
             
             if (horaiDirection)
               horai->Move(
-                horaiDirection.value(),
+                *horaiDirection,
                 display.Size.Bounds.Reduce(horai->Size)
               );
             
