@@ -3,12 +3,12 @@ BinDir = bin
 
 MainFile         = $(SrcDir)/Main.cpp
 ScoreFile        = $(BinDir)/score.dat
-OutputFileName   = $(basename $(notdir $(MainFile)))
+OutputFileName   = Ikaruga
 OutputFile       = $(BinDir)/$(OutputFileName)
 CompilationUnits = $(SrcDir)/allegro/*.cpp \
                    $(SrcDir)/game/*.cpp
 
-Build       = clang++ # or g++
+Build       = g++ # or clang++
 Standard    = c++14
 Libs        = allegro-5 allegro_ttf-5
 BuildFlags  = $(shell pkg-config --cflags --libs $(Libs))	\

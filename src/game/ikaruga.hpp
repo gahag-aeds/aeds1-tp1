@@ -31,8 +31,8 @@ namespace Game {
     
     void Move(double, Allegro::Bounds);  // Direction in radians.
     
-    bool Collide(const Horai&); // Collision with a horai.
-                                // Returns wether ikaruga collided with the horai.
+    bool Collides(const Horai&); // Checks collision with a horai.
+                                 // Returns wether ikaruga collided with the horai.
     
     bool Alive() const;
     

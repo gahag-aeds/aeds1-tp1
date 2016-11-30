@@ -29,7 +29,7 @@ namespace Game {
     this->Pos.Move(this->Speed, direction, bounds);
   }
   
-  bool Ikaruga::Collide(const Horai& horai) {
+  bool Ikaruga::Collides(const Horai& horai) {
     if (Game::rectCollision(*this, horai)) {
       if (this->Polarity() == horai.Polarity)
         this->score++;

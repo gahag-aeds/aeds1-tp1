@@ -8,7 +8,7 @@ namespace Allegro {
     if (!this->timer)
       throw std::runtime_error("failed to initialize timer");
   }
-
+  
   
   void Timer::Start() const {
     al_start_timer(this->timer.get());
@@ -22,7 +22,7 @@ namespace Allegro {
   int64_t Timer::Count() const {
     return al_get_timer_count(this->timer.get());
   }
-
+  
   ALLEGRO_EVENT_SOURCE* Timer::EventSource() const {
     return al_get_timer_event_source(this->timer.get());
   }

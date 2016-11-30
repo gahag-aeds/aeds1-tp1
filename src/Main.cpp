@@ -127,7 +127,7 @@ auto main() -> int
           }
           
           for (auto horai = enemies.begin(); horai != enemies.end(); /* no increment */) {
-            if (ikaruga.Collide(*horai)) {
+            if (ikaruga.Collides(*horai)) {
               if (!ikaruga.Alive()) {
                 playing = false;
                 break;
