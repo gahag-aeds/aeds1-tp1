@@ -20,8 +20,8 @@
 
 
 constexpr unsigned FPS = 60
-                 , IkarugaSpeed = 5
-                 , HoraiSpeed   = 3
+                 , IkarugaSpeed = 10
+                 , HoraiSpeed   = 8
                  , MaxEnemies   = 20;
 
 constexpr Allegro::Size ScreenSize(1200, 800);

@@ -11,10 +11,11 @@ CompilationUnits = $(SrcDir)/allegro/*.cpp \
 Build       = g++ # or clang++
 Standard    = c++14
 Libs        = allegro-5 allegro_ttf-5
-BuildFlags  = $(shell pkg-config --cflags --libs $(Libs))	\
-              -std=$(Standard)														\
-              -I $(SrcDir)																\
-              -o $(OutputFile)														\
+BuildFlags  = $(shell pkg-config --cflags --libs $(Libs)) \
+              -Wall                                       \
+              -std=$(Standard)                            \
+              -I $(SrcDir)                                \
+              -o $(OutputFile)
 
 
 directories:
