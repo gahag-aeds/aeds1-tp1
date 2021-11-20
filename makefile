@@ -1,19 +1,18 @@
 SrcDir = src
 BinDir = bin
 
-MainFile         = $(SrcDir)/Main.cpp
-ScoreFile        = $(BinDir)/score.dat
-OutputFileName   = Ikaruga
-OutputFile       = $(BinDir)/$(OutputFileName)
-CompilationUnits = $(SrcDir)/allegro/*.cpp \
-                   $(SrcDir)/game/*.cpp
+ScoreFile  = $(BinDir)/score.dat
+OutputFile = $(BinDir)/ikaruga
 
-Build       = g++ # or clang++
-Standard    = c++14
+CompilationUnits = $(shell find $(SrcDir) -name '*.cpp')
+
+Build       = clang++ # or g++
+Warnings    = -Wall
+Standard    = -std=c++14
 Libs        = allegro-5 allegro_ttf-5
 BuildFlags  = $(shell pkg-config --cflags --libs $(Libs)) \
-              -Wall                                       \
-              -std=$(Standard)                            \
+              $(Warnings)                                 \
+              $(Standard)                                 \
               -I $(SrcDir)                                \
               -o $(OutputFile)
 
